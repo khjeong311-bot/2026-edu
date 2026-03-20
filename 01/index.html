@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교육철학의 이해 - 인터랙티브 학습</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .quiz-card { transition: transform 0.3s; }
+        .quiz-card:hover { transform: translateY(-5px); }
+        
+        /* 모달 애니메이션 */
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow: hidden; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- 상단 유틸리티 영역 (홈 버튼) -->
+    <div class="max-w-4xl mx-auto flex justify-start mb-4">
+        <a href="../index.html" class="flex items-center text-gray-500 hover:text-indigo-600 transition-colors font-medium">
+            <i class="fas fa-home mr-2"></i> 홈
+        </a>
+    </div>
+
+    <header class="max-w-4xl mx-auto text-center mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold text-indigo-700 mb-2">🎓 교육철학의 이해</h1>
+        <p class="text-gray-600">20세기 전반 및 후반의 주요 교육철학 사조를 탐구해 봅시다.</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto">
+        <!-- 네비게이션 탭 -->
+        <div class="flex flex-wrap border-b border-gray-200 mb-6 bg-white rounded-t-lg overflow-hidden shadow-sm">
+            <button onclick="showTab('early')" id="btn-early" class="tab-btn px-6 py-3 font-semibold text-indigo-600 border-b-2 border-indigo-600 transition-all">20세기 전반</button>
+            <button onclick="showTab('late')" id="btn-late" class="tab-btn px-6 py-3 font-semibold text-gray-500 hover:text-indigo-600 transition-all">20세기 후반</button>
+            <button onclick="showTab('quiz')" id="btn-quiz" class="tab-btn px-6 py-3 font-semibold text-gray-500 hover:text-indigo-600 transition-all">지식 체크 퀴즈</button>
+        </div>
+
+        <!-- 20세기 전반 섹션 -->
+        <div id="early" class="tab-content active space-y-6">
+            <!-- 인포그래픽 버튼 -->
+            <div class="flex justify-end mb-4">
+                <button onclick="toggleModal()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-bold py-2 px-4 rounded-lg flex items-center transition-colors shadow-sm">
+                    <i class="fas fa-image mr-2"></i> 인포그래픽 보기
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500">
+                    <h3 class="text-xl font-bold mb-3">🌿 진보주의 (Dewey)</h3>
+                    <p class="text-sm text-gray-600 mb-2">"교육은 생활의 준비가 아니라 생활 그 자체이다."</p>
+                    <ul class="list-disc ml-5 space-y-1 text-gray-700">
+                        <li>아동의 흥미 중시</li>
+                        <li>문제해결식 학습</li>
+                        <li>교사는 '조언자' 역할</li>
+                        <li>민주주의적 상호작용</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-amber-500">
+                    <h3 class="text-xl font-bold mb-3">📚 본질주의 (Bagley)</h3>
+                    <p class="text-sm text-gray-600 mb-2">"문화의 본질적 요소를 체계적으로 전수한다."</p>
+                    <ul class="list-disc ml-5 space-y-1 text-gray-700">
+                        <li>교사 주도적 교육</li>
+                        <li>노력과 훈련 강조</li>
+                        <li>전통적 학업 가치 유지</li>
+                        <li>기본적 지식의 소화 중시</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-emerald-500">
+                    <h3 class="text-xl font-bold mb-3">🕰️ 항존주의 (Hutchins)</h3>
+                    <p class="text-sm text-gray-600 mb-2">"영원불변하는 진리를 추구한다."</p>
+                    <ul class="list-disc ml-5 space-y-1 text-gray-700">
+                        <li>인간 본성의 동일함 강조</li>
+                        <li>이성 계발 중심</li>
+                        <li>위대한 저작(Great Books) 공부</li>
+                        <li>삶의 예비로서의 교육</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-red-500">
+                    <h3 class="text-xl font-bold mb-3">🏗️ 재건주의 (Brameld)</h3>
+                    <p class="text-sm text-gray-600 mb-2">"교육을 통한 새로운 사회질서 창조."</p>
+                    <ul class="list-disc ml-5 space-y-1 text-gray-700">
+                        <li>사회적 책임과 개혁 강조</li>
+                        <li>미래 지향적 태도</li>
+                        <li>행동과학에 기초한 수단</li>
+                        <li>민주적 다수의 공유 가치</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 20세기 후반 섹션 -->
+        <div id="late" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-md space-y-8">
+                <section>
+                    <h3 class="text-xl font-bold text-indigo-800 border-b pb-2 mb-3">👤 실존주의 (사르트르)</h3>
+                    <p class="text-gray-700">"실존은 본질에 우선한다." 학습자 개개인의 주체성과 선택, 책임을 강조합니다. 학교는 대화와 토론의 장입니다.</p>
+                </section>
+                <section>
+                    <h3 class="text-xl font-bold text-indigo-800 border-b pb-2 mb-3">🔍 분석철학 (피터스)</h3>
+                    <p class="text-gray-700">언어와 논리의 관계를 분석하여 '교육', '교수' 등의 개념을 명확히 정립합니다. 객관적 지식체계를 중시합니다.</p>
+                </section>
+                <section>
+                    <h3 class="text-xl font-bold text-indigo-800 border-b pb-2 mb-3">🚩 비판이론 (아도르노)</h3>
+                    <p class="text-gray-700">사회적 불평등과 이데올로기를 비판합니다. 교육을 통해 억압적 요인을 제거하고 '의식화'하는 과정을 중시합니다.</p>
+                </section>
+                <section>
+                    <h3 class="text-xl font-bold text-indigo-800 border-b pb-2 mb-3">🌈 포스트모더니즘 (푸코)</h3>
+                    <p class="text-gray-700">절대적 진리를 거부하고 다양성과 차이를 존중합니다. 작은 목소리와 정서, 문화적 맥락의 중요성을 강조합니다.</p>
+                </section>
+            </div>
+        </div>
+
+        <!-- 퀴즈 섹션 -->
+        <div id="quiz" class="tab-content">
+            <div id="quiz-container" class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <div id="question-box">
+                    <span id="q-num" class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-bold">문제 1</span>
+                    <h2 id="q-text" class="text-xl font-bold mt-4 mb-6">질문 내용이 여기에 표시됩니다.</h2>
+                    <div id="options" class="space-y-3">
+                        <!-- 옵션들이 자바스크립트로 생성됨 -->
+                    </div>
+                </div>
+                <div id="result-box" class="hidden text-center py-10">
+                    <h2 class="text-3xl font-bold mb-4">학습 완료! 🎉</h2>
+                    <p id="final-score" class="text-xl mb-6 font-semibold"></p>
+                    <button onclick="restartQuiz()" class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition shadow-md">다시 도전하기</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 모달 레이아웃 -->
+    <div id="image-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+        <div onclick="toggleModal()" class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+        
+        <div class="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <!--Title-->
+                <div class="flex justify-between items-center pb-3 border-b mb-4">
+                    <p class="text-2xl font-bold">20세기 전반 교육철학 인포그래픽</p>
+                    <div onclick="toggleModal()" class="modal-close cursor-pointer z-50">
+                        <i class="fas fa-times text-gray-500 hover:text-black"></i>
+                    </div>
+                </div>
+
+                <!--Body-->
+                <div class="flex justify-center bg-gray-100 p-4 rounded-lg">
+                    <img src="04.png" alt="20세기 전반 교육철학 인포그래픽" class="max-w-full h-auto rounded shadow" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400?text=인포그래픽+이미지(04.png)+준비중';">
+                </div>
+
+                <!--Footer-->
+                <div class="flex justify-end pt-4">
+                    <button onclick="toggleModal()" class="px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-12 text-center text-gray-400 text-sm">
+        <p>&copy; 2024 교육철학 학습 도구 - 수업용 인터렉티브 페이지</p>
+    </footer>
+
+    <script>
+        // 모달 토글 로직
+        function toggleModal() {
+            const body = document.querySelector('body');
+            const modal = document.getElementById('image-modal');
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+            body.classList.toggle('modal-active');
+        }
+
+        // 탭 전환 로직
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('text-indigo-600', 'border-indigo-600', 'border-b-2');
+                el.classList.add('text-gray-500');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('text-indigo-600', 'border-indigo-600', 'border-b-2');
+            activeBtn.classList.remove('text-gray-500');
+        }
+
+        // 퀴즈 데이터
+        const quizData = [
+            {
+                q: "교육을 '경험의 개조 혹은 재구성'으로 정의하며 학습자의 흥미를 강조한 철학 사조는?",
+                a: ["본질주의", "진보주의", "항존주의", "실존주의"],
+                correct: 1
+            },
+            {
+                q: "'Great Books(위대한 저작)'를 공부함으로써 영원불변한 진리를 추구해야 한다고 주장하는 사조는?",
+                a: ["재건주의", "진보주의", "항존주의", "포스트모더니즘"],
+                correct: 2
+            },
+            {
+                q: "\"실존은 본질에 우선한다\"고 말하며 개개인의 선택과 책임을 강조한 철학자는?",
+                a: ["듀이", "배글리", "푸코", "사르트르"],
+                correct: 3
+            },
+            {
+                q: "근대적 학교 교육을 효율성만 추구하는 '통제 교육'이라 비판하며 다양성을 강조한 사조는?",
+                a: ["분석철학", "비판이론", "포스트모더니즘", "본질주의"],
+                correct: 2
+            }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            const qBox = document.getElementById('question-box');
+            const rBox = document.getElementById('result-box');
+            
+            if (currentQ < quizData.length) {
+                qBox.classList.remove('hidden');
+                rBox.classList.add('hidden');
+                
+                document.getElementById('q-num').innerText = `문제 ${currentQ + 1} / ${quizData.length}`;
+                document.getElementById('q-text').innerText = quizData[currentQ].q;
+                
+                const optionsDiv = document.getElementById('options');
+                optionsDiv.innerHTML = '';
+                
+                quizData[currentQ].a.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 border-2 border-gray-100 rounded-xl hover:bg-indigo-50 hover:border-indigo-200 transition-all font-medium";
+                    btn.innerText = `${idx + 1}. ${opt}`;
+                    btn.onclick = () => checkAnswer(idx);
+                    optionsDiv.appendChild(btn);
+                });
+            } else {
+                qBox.classList.add('hidden');
+                rBox.classList.remove('hidden');
+                document.getElementById('final-score').innerText = `총 ${quizData.length}문제 중 ${score}문제를 맞히셨습니다!`;
+            }
+        }
+
+        function checkAnswer(idx) {
+            if (idx === quizData[currentQ].correct) {
+                score++;
+                alert("정답입니다! ✨");
+            } else {
+                alert(`아쉽네요. 정답은 '${quizData[currentQ].a[quizData[currentQ].correct]}' 입니다.`);
+            }
+            currentQ++;
+            loadQuiz();
+        }
+
+        function restartQuiz() {
+            currentQ = 0;
+            score = 0;
+            loadQuiz();
+        }
+
+        // 초기 로드
+        window.onload = loadQuiz;
+    </script>
+</body>
+</html>
